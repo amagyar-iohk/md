@@ -35,7 +35,7 @@ function execute(baseDir, dir, excludeRegex, url) {
     // filters any empty entry
     excludeRegex = excludeRegex.filter((v) => v != '')
     
-    let findings = find(baseDir, excludeRegex)
+    let findings = find(root, excludeRegex)
 
     return {
         matches: findings,
