@@ -36,7 +36,7 @@ const validations = [
         out: "docs.md"
     },
     {
-        url: "https://github.com/hyperledger/identus-cloud-agent/",
+        url: "https://github.com/hyperledger/identus-cloud-agent",
         dir: "/docs/decisions",
         exclude: [],
         out: "adrs.md"
@@ -46,7 +46,7 @@ const validations = [
 validations.forEach(validation => {
     execSync("rm -rf temp")
     execSync(`git clone ${validation.url} temp`)
-    let result = execute(`temp${validation.dir}`, validation.exclude, validation.url)
+    let result = execute("temp", validation.dir, validation.exclude, validation.url)
     result.toTable(validation.out)
     execSync("rm -rf temp")
 })

@@ -11,13 +11,13 @@ const defaultIgnore = [
     ".git"
 ]
 
-function execute(baseDir, excludeRegex, url) {
+function execute(baseDir, dir, excludeRegex, url) {
     // cleanup
     matches = {}
     termToFile = {}
 
     root = baseDir
-    repo = url + "/blob/main"
+    repo = url + dir + "/blob/main"
 
     if (!excludeRegex) {
         excludeRegex = []
@@ -62,7 +62,7 @@ function find(baseDir, excludeRegex) {
         const itemPath = path.join(baseDir, item);
         let ignore = false
         excludeRegex.forEach(regex => {
-            if (itemPath.includes(regex)) {
+            if (itemPath.toLocaleLowerCase().includes(regex.toLocaleLowerCase())) {
                 ignore = true
             }
         })
@@ -89,7 +89,7 @@ function readFile(filePath) {
         }
 
         for (let i = 0; i < fileContent.length; i++) {
-            if (fileContent[i].includes(term)) {
+            if (fileContent[i].toLocaleLowerCase().includes(term.toLocaleLowerCase())) {
                 if (!matches[filePath]) {
                     matches[filePath] = []
                 }
