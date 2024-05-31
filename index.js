@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const termsReplacement = require('./replacement')
 
-const matches = {};
-const termToFile = {}
+let matches = {};
+let termToFile = {}
 let root = ""
 let repo = ""
 
@@ -12,6 +12,10 @@ const defaultIgnore = [
 ]
 
 function execute(baseDir, excludeRegex, url) {
+    // cleanup
+    matches = {}
+    termToFile = {}
+
     root = baseDir
     repo = url + "/blob/main"
 
@@ -19,21 +23,24 @@ function execute(baseDir, excludeRegex, url) {
         excludeRegex = []
     }
 
+    excludeRegex = [...excludeRegex, ...defaultIgnore]
+
     // ignore files declared on .git folder
-    const gitignore = fs.readFileSync(`${baseDir}/.gitignore`, 'utf-8').trim().split('\n')
-    excludeRegex = [...defaultIgnore, ...excludeRegex, ...gitignore].filter((v) => v != '')
+    if (fs.existsSync(`${baseDir}/.gitignore`)) {
+        const gitignore = fs.readFileSync(`${baseDir}/.gitignore`, 'utf-8').trim().split('\n')
+        excludeRegex = [...excludeRegex, ...gitignore]
 
+    }
 
+    // filters any empty entry
+    excludeRegex = excludeRegex.filter((v) => v != '')
+    
     let findings = find(baseDir, excludeRegex)
 
     return {
         matches: findings,
         files: Object.keys(matches),
         toTable: function(out) {
-            if (Object.keys(termToFile) == 0) {
-                return "No terms found"
-            }
-
             let output =  "| term | replace with | files |\n"
             output +=     "|------|--------------|-------|\n"
             Object.keys(termToFile).forEach(term => {
@@ -45,7 +52,7 @@ function execute(baseDir, excludeRegex, url) {
                 output += files + "|\n"
             })
             
-            fs.writeFileSync(out, output)
+            fs.writeFileSync(`reports/${out}`, output)
         }
     }
 }
