@@ -17,7 +17,7 @@ function execute(baseDir, dir, excludeRegex, url) {
     termToFile = {}
 
     root = baseDir + dir
-    repo = url + dir + "/blob/main"
+    repo = url + "/blob/main" + dir
 
     if (!excludeRegex) {
         excludeRegex = []
