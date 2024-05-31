@@ -1,0 +1,17 @@
+{
+  "name": "finder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "search": "npm run"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "atalaFinder": "cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.13"
+  }
+}
