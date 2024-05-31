@@ -10,6 +10,7 @@ let repo = ""
 const defaultIgnore = [
     ".git"
 ]
+
 function execute(baseDir, excludeRegex, url) {
     root = baseDir
     repo = url + "/blob/main"
@@ -28,7 +29,7 @@ function execute(baseDir, excludeRegex, url) {
     return {
         matches: findings,
         files: Object.keys(matches),
-        toTable: function() {
+        toTable: function(out) {
             if (Object.keys(termToFile) == 0) {
                 return "No terms found"
             }
@@ -44,7 +45,7 @@ function execute(baseDir, excludeRegex, url) {
                 output += files + "|\n"
             })
             
-            fs.writeFileSync('output.md', output)
+            fs.writeFileSync(out, output)
         }
     }
 }
@@ -74,10 +75,12 @@ function find(baseDir, excludeRegex) {
 function readFile(filePath) {
     const fileContent = fs.readFileSync(filePath, 'utf8').split('\n')
     for (const term of Object.keys(termsReplacement)) {
+
+        // ignore if term == replacement
         if (term == termsReplacement[term]) {
-            console.log("term equals replacement")
             continue
         }
+
         for (let i = 0; i < fileContent.length; i++) {
             if (fileContent[i].includes(term)) {
                 if (!matches[filePath]) {
