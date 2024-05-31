@@ -15,7 +15,7 @@ const repoList = [
 repoList.forEach(repo => {
     execSync("rm -rf temp")
     execSync(`git clone ${repo.url} temp`)
-    let result = execute('./temp', repo.exclude, repo.url)
+    let result = execute('temp', repo.exclude, repo.url)
     result.toTable(repo.out)
-    execySync("rm -rf temp")
+    execSync("rm -rf temp")
 })

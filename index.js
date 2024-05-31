@@ -95,7 +95,7 @@ function readFile(filePath) {
                     value: fileContent[i]
                 })
                 const relativePath = filePath.replace(root, "")
-                termToFile[term].push(`${repo}/${relativePath}` + "?plain=1#L" + (i+1))
+                termToFile[term].push(`${repo}${relativePath}` + "?plain=1#L" + (i+1))
             }
         }
 
