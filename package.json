@@ -9,9 +9,13 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "atalaFinder": "cli.js"
+    "terms": "terms.js",
+    "markdown": "markdown.js"
   },
   "devDependencies": {
     "@types/node": "^20.12.13"
+  },
+  "dependencies": {
+    "markdown-link-extractor": "^4.0.2"
   }
 }

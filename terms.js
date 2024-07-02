@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
 const { execSync } = require('child_process')
-const { execute } = require('./index')
+const { execute } = require('./src/terms/runner')
 
 const validations = [
     {
@@ -34,6 +33,12 @@ const validations = [
         dir: "",
         exclude: ["CHANGELOG.md"],
         out: "docs.md"
+    },
+    {
+        url: "https://github.com/hyperledger/identus-cloud-agent",
+        dir: "",
+        exclude: ["/docs/decisions", "CHANGELOG.md"],
+        out: "cloud-agent.md"
     },
     {
         url: "https://github.com/hyperledger/identus-cloud-agent",
